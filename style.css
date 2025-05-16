@@ -2,8 +2,10 @@
 
 body {
   font-family: 'Manrope', sans-serif;
-  background-color: #111827; /* Tailwind's gray-900 */
-  color: white;
+  background-color: #e6f7ef; /* Light green brand background */
+  color: #111827; /* Dark text for readability */
+  margin: 0;
+  padding: 2rem;
 }
 
 h1 {
@@ -18,16 +20,20 @@ table {
   width: 100%;
   border-collapse: collapse;
   font-size: 1.1rem;
+  background-color: white;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+  overflow: hidden;
 }
 
 thead {
-  background-color: #1f2937; /* Tailwind's gray-800 */
-  color: #09b367;
+  background-color: #09b367;
+  color: white;
   text-transform: uppercase;
 }
 
 th, td {
-  border: 1px solid #374151; /* Tailwind's gray-700 */
+  border: 1px solid #b6e9d4;
   padding: 1rem;
 }
 
@@ -41,8 +47,9 @@ td {
 
 td:first-child {
   font-weight: bold;
+  text-align: left;
 }
 
 tbody tr:hover {
-  background-color: #1e1e1e;
+  background-color: #d1f2e3;
 }
