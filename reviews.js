@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTaYVCNVbwusD3ykt6zDrfNQuNTVmk9W2CVxodvOvvNbOL2qH5FPFEW6jJ-Ld6JXkt7m8b2lqKlZMfv/pub?output=csv';
+  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-aDDMSlRPZWybuzjfxB0ip_F-YuNiITedkjYSYQGCV7amDV5kqihqQ7ajZFxwPJb59wxxpkiVblAf/pub?gid=1831553687&single=true&output=csv';
   const tableBody = document.querySelector('#leaderboard-table tbody');
 
   function fetchAndUpdateLeaderboard() {
