@@ -1,26 +1,36 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-aDDMSlRPZWybuzjfxB0ip_F-YuNiITedkjYSYQGCV7amDV5kqihqQ7ajZFxwPJb59wxxpkiVblAf/pub?gid=1831553687&single=true&output=csv';
+  const apiKey = "AIzaSyCXI572KRVMs95yaekkJXh2gNEYZIqJvTo";  // replace with your actual key
+  const sheetId = "1qZnVLJ8FSZx_KYO8IpavepZxYI3-V-cD_4fAT6KT66I"; // your sheet ID
+  const range = "'Pivot Table 1'!A1:O1000"; // pivot table range
   const tableBody = document.querySelector('#leaderboard-table tbody');
 
   function fetchAndUpdateLeaderboard() {
-    Papa.parse(csvUrl, {
-      download: true,
-      header: true,
-      skipEmptyLines: true,
-      complete: function (results) {
-        const emailKey = 'Email Address';
-        const countKey = 'COUNTA of Customer Trail ID';
+    const url = `https://sheets.googleapis.com/v4/spreadsheets/${sheetId}/values/${encodeURIComponent(range)}?key=${apiKey}`;
+
+    fetch(url)
+      .then(response => response.json())
+      .then(data => {
+        const rows = data.values;
+        if (!rows || rows.length === 0) return;
+
+        // First row is headers
+        const headers = rows[0];
+        const emailIndex = headers.indexOf("Email Address");
+        const countIndex = headers.indexOf("COUNTA of Customer Trail ID");
 
         // Clear old rows
         tableBody.innerHTML = '';
 
-        const filteredData = results.data.filter(row => row[emailKey] && row[emailKey] !== 'Grand Total');
+        // Filter valid rows (skip empty + Grand Total)
+        const filteredData = rows.slice(1).filter(r => r[emailIndex] && r[emailIndex] !== 'Grand Total');
 
-        filteredData.sort((a, b) => parseInt(b[countKey]) - parseInt(a[countKey]));
+        // Sort by count desc
+        filteredData.sort((a, b) => parseInt(b[countIndex]) - parseInt(a[countIndex]));
 
         filteredData.forEach((row, index) => {
           const rank = index + 1;
-          const email = row[emailKey];
+          const email = row[emailIndex];
+          const count = row[countIndex];
 
           let namePart = email.split('@')[0];
           let name = namePart.split(/[._\-]/).map(part => part.charAt(0).toUpperCase() + part.slice(1)).join(' ');
@@ -30,7 +40,7 @@ document.addEventListener('DOMContentLoaded', function () {
           const nameCell = document.createElement('td');
           const countCell = document.createElement('td');
 
-          // Add medal emoji for top 3 ranks
+          // Medal for top 3
           if (rank === 1) {
             rankCell.textContent = `🥇 ${rank}`;
             tr.classList.add('first-place');
@@ -45,22 +55,20 @@ document.addEventListener('DOMContentLoaded', function () {
           }
 
           nameCell.textContent = name;
-          countCell.textContent = row[countKey];
+          countCell.textContent = count;
 
           tr.appendChild(rankCell);
           tr.appendChild(nameCell);
           tr.appendChild(countCell);
           tableBody.appendChild(tr);
         });
-      }
-    });
+      })
+      .catch(err => console.error("Error fetching sheet data:", err));
   }
 
   // Initial load
   fetchAndUpdateLeaderboard();
 
-  // Auto-refresh every 5 minutes (300000ms). Change to 60000 for 1 minute if testing.
+  // Auto-refresh every 1 min
   setInterval(fetchAndUpdateLeaderboard, 60000);
 });
-
-
