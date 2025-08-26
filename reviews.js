@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-aDDMSlRPZWybuzjfxB0ip_F-YuNiITedkjYSYQGCV7amDV5kqihqQ7ajZFxwPJb59wxxpkiVblAf/pubhtml';
+  const csvUrl = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vT-aDDMSlRPZWybuzjfxB0ip_F-YuNiITedkjYSYQGCV7amDV5kqihqQ7ajZFxwPJb59wxxpkiVblAf/pub?gid=1831553687&single=true&output=csv';
   const tableBody = document.querySelector('#leaderboard-table tbody');
 
   function fetchAndUpdateLeaderboard() {
@@ -62,4 +62,5 @@ document.addEventListener('DOMContentLoaded', function () {
   // Auto-refresh every 5 minutes (300000ms). Change to 60000 for 1 minute if testing.
   setInterval(fetchAndUpdateLeaderboard, 60000);
 });
+
 
