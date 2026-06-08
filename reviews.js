@@ -1,7 +1,7 @@
 document.addEventListener('DOMContentLoaded', function () {
   const apiKey = "AIzaSyCXI572KRVMs95yaekkJXh2gNEYZIqJvTo";  // replace with your actual key
   const sheetId = "1qZnVLJ8FSZx_KYO8IpavepZxYI3-V-cD_4fAT6KT66I"; // your sheet ID
-  const range = "'Pivot Table 1'!A1:O1000"; // pivot table range
+  const range = "'Pivot Table 12'!A1:O1000"; // pivot table range
   const tableBody = document.querySelector('#leaderboard-table tbody');
 
   function fetchAndUpdateLeaderboard() {
